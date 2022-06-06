@@ -1,0 +1,20 @@
+{
+  "name": "graphql_tweet",
+  "version": "1.0.0",
+  "description": "노마드 코더 강의 실습\r 링크 : https://nomadcoders.co/graphql-for-beginners/lectures/3704",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.8.2",
+    "graphql": "^16.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "type": "module"
+}
