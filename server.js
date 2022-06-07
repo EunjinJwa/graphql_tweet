@@ -3,15 +3,18 @@ import {ApolloServer, gql} from "apollo-server";
 let tweets = [
     {
         id: "1",
-        text: "hello! first"
+        text: "hello! first",
+        userId: "1"
     },
     {
         id: "2",
-        text: "hello! second"
+        text: "hello! second",
+        userId: "2"
     },
     {
         id: "3",
-        text: "hello! third"
+        text: "hello! third",
+        userId: "2"
     },
 ];
 
@@ -36,10 +39,13 @@ const typeDefs = gql`
         lastName: String
         fullName: String!
     }
+    """
+    Tweet object represents a resource for a Tweet
+    """
     type Tweet {
         id: ID!,
         text: String!,
-        author: User
+        author: User!
     }
     type Query {
         allUsers: [User]
@@ -48,6 +54,9 @@ const typeDefs = gql`
         }    
     type Mutation {
         postTweet(text: String!, userId: ID): Tweet!
+        """
+        Deletes a Tweet if found, else returns false
+        """
         deleteTweet(id: ID!): Boolean!
     }
 `;
@@ -70,9 +79,14 @@ const resolvers = {
     },
     Mutation: {
         postTweet(_, {text, userId}) {
+            if(!users.find(user => user.id === userId)) {
+                console.log("user not exists.")
+                throw new Error("User not exits.");
+            }
             const newTweet = {
                 id: tweets.length + 1,
-                text: text
+                text: text,
+                userId: userId
             };
             tweets.push(newTweet);
             return newTweet;
@@ -87,6 +101,11 @@ const resolvers = {
     User: {
         fullName({firstName, lastName}) {       // 앞서 실행한 User 타입의 결과인 User 데이터가 첫 번째 인자(root)에 담겨있음. 
             return `${firstName} ${lastName}`;
+        }
+    },
+    Tweet: {
+        author({userId}) {
+            return users.find(user => user.id === userId);
         }
     }
 }
