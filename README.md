@@ -37,7 +37,7 @@ const typeDefs = gql`
     * 스키마 정의로, 필수로 작성해야함.
     * type Query { hello: String} 는 restAPI의 GET /hello 와 같음.
 * `type Mutation`
-    * 데이터를 조회하는 GET 은 Query로 작성하되, 변경이 생기는 작업은 Mutation 에 작성한다.
+    * 데이터를 조회하는 GET 은 Query로 작성하되, 변경이 생기는 작업은(POST, PUT, DELETE) Mutation 에 작성한다.
 
 
 
